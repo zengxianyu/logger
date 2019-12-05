@@ -19,7 +19,7 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
 
 
 class Logger:
-    def __init__(self, log_dir=None, clear=False):
+    def __init__(self, log_dir=None, clear=False, port=8000):
         if log_dir is not None:
             self.log_dir = log_dir
             if not os.path.exists(log_dir):
@@ -41,16 +41,15 @@ class Logger:
                 os.system("rm -rf {}/image_ticks/*".format(log_dir))
             self.plot_vals = {}
             self.plot_times = {}
-            PORT = 8000
             def http_server():
                 Handler = QuietHandler
-                with socketserver.TCPServer(("", PORT), Handler) as httpd:
+                with socketserver.TCPServer(("", port), Handler) as httpd:
                     #print("serving at port", PORT)
                     httpd.serve_forever()
             x=threading.Thread(target=http_server)
             x.start()
             print("==============================================")
-            print("visualize at http://host ip:{}/{}.html".format(PORT, self.log_dir))
+            print("visualize at http://host ip:{}/{}.html".format(port, self.log_dir))
             print("==============================================")
 
 
