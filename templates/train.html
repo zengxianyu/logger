@@ -18,7 +18,7 @@
 		{% endfor %}
 	</tr>
 </table>
-
+{% if image_tick_path %}
 <h1>image</h1>
 <label id="label">test</label>
 <input type="range" id="myRange" value="{{image_tick_path[0]['tick']|length-1}}" min="{{0}}" max="{{image_tick_path[0]['tick']|length-1}}" step="1">
@@ -54,3 +54,4 @@ slider.oninput = function() {
     {% endfor %}
 }
 </script>
+{% endif %}

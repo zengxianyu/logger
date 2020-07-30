@@ -150,8 +150,10 @@ class Logger:
             ticks = list(map(lambda x:int(x), ticks))
             folderpath = os.path.join(re_prefix, "image", folder)
             image_tick_path.append({"tick":ticks, "path":folderpath})
-
-        output = template.render( plotfiles=plotfiles, image_tick_path=image_tick_path, title_name=prefix)
+        if len(image_tick_path)>0:
+            output = template.render( plotfiles=plotfiles, image_tick_path=image_tick_path, title_name=prefix)
+        else:
+            output = template.render(plotfiles=plotfiles, title_name=prefix)
         #print(output)
         with open("{}.html".format(prefix), "w") as f:
             f.writelines(output)
