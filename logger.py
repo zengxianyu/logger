@@ -62,6 +62,30 @@ class Logger:
             #print("visualize at http://host ip:{}/{}.html".format(port, self.log_dir))
             #print("==============================================")
 
+    def batch_plot_landmark(self, name, batch_img, dict_label_mark):
+        bsize, c, h, w = batch_img.shape
+        batch_img = batch_img.detach().numpy().transpose((0, 2, 3, 1))
+        cat_image = np.concatenate(list(batch_img), 1)
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.imshow(cat_image)
+        for label, batch_land in dict_label_mark.items():
+            batch_land2d = batch_land[:, :, :2]
+            _, n_points, _ = batch_land2d.shape
+            batch_land2d[:, :, 1] = h - batch_land2d[:, :, 1]
+            batch_land2d = batch_land2d.detach().numpy()
+            offset = np.arange(0, bsize * w, w)
+            batch_land2d[:, :, 0] += offset[..., None]
+            batch_land2d = batch_land2d.reshape(-1, 2)
+
+            ax.scatter(batch_land2d[:, 0], batch_land2d[:, 1], s=2, label=label)
+        ax.axis("off")
+        # Put a legend below current axis
+        ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
+                  fancybox=True, shadow=True, ncol=5)
+        fig.savefig(os.path.join(self.plot_dir, '%s.png'%name))
+        plt.close()
+
 
     def add_scalar(self, name, value, t_iter):
         if not name in self.plot_vals:
