@@ -9,7 +9,6 @@ from PIL import Image
 import threading
 import http.server
 import socketserver
-from scipy.io import loadmat
 import pdb
 
 
