@@ -63,7 +63,7 @@ class Logger:
 
     def batch_plot_landmark(self, name, batch_img, dict_label_mark):
         bsize, c, h, w = batch_img.shape
-        batch_img = batch_img.detach().numpy().transpose((0, 2, 3, 1))
+        batch_img = batch_img.detach()cpu().numpy().transpose((0, 2, 3, 1))
         cat_image = np.concatenate(list(batch_img), 1)
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -72,7 +72,7 @@ class Logger:
             batch_land2d = batch_land[:, :, :2]
             _, n_points, _ = batch_land2d.shape
             batch_land2d[:, :, 1] = h - batch_land2d[:, :, 1]
-            batch_land2d = batch_land2d.detach().numpy()
+            batch_land2d = batch_land2d.detach().cpu().numpy()
             offset = np.arange(0, bsize * w, w)
             batch_land2d[:, :, 0] += offset[..., None]
             batch_land2d = batch_land2d.reshape(-1, 2)
