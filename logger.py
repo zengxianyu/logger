@@ -63,7 +63,7 @@ class Logger:
 
     def batch_plot_landmark(self, name, batch_img, dict_label_mark):
         bsize, c, h, w = batch_img.shape
-        batch_img = batch_img.detach()cpu().numpy().transpose((0, 2, 3, 1))
+        batch_img = batch_img.detach().cpu().numpy().transpose((0, 2, 3, 1))
         cat_image = np.concatenate(list(batch_img), 1)
         fig = plt.figure()
         ax = fig.add_subplot(111)
