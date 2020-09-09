@@ -100,6 +100,12 @@ class Logger:
         plt.close()
     #add_image('image', torchvision.utils.make_grid(img), num_iter)
 
+    def add_single_image(self, name, image, t_iter=None):
+       image = image.detach().cpu().numpy()
+       image = image.transpose((1, 2, 0))
+       image = Image.fromarray((image*255).astype(np.uint8))
+       image.save(os.path.join(self.plot_dir, "%s.png"%name))
+
     def add_image(self, name, image, t_iter):
        path_name = os.path.join(self.image_dir, name)
        if not os.path.exists(path_name):
