@@ -2,6 +2,7 @@
 <title>{{title_name}}</title>
 
 <h1>plot</h1>
+<!--
 <table style="width:100%">
     <tr>
 		{% for pf in plotfiles %}
@@ -18,6 +19,11 @@
 		{% endfor %}
 	</tr>
 </table>
+-->
+{% for pf in plotfiles %}
+{{pf}}
+<img src="{{pf}}" alt="{{pf}}">
+{% endfor %}
 {% if image_tick_path %}
 <h1>image</h1>
 <label id="label">test</label>
