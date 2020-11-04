@@ -92,8 +92,11 @@ class Logger:
         plt.close()
     #add_image('image', torchvision.utils.make_grid(img), num_iter)
 
-    def add_text(self, name, list_text, t_iter):
-        w = len(list_text[0])*8
+    def add_text(self, name, list_text, t_iter, n_word=None):
+        if n_word is not None:
+            w = n_word*8
+        else:
+            w = len(list_text[0])*8
         h = len(list_text)*50
         img = Image.fromarray(np.ones((h,w,3), dtype=np.uint8)*255)
         d = ImageDraw.Draw(img)
