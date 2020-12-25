@@ -124,6 +124,15 @@ class Logger:
        with open(os.path.join(self.log_dir, "image_ticks", name+".txt"), "a") as f:
            f.write(str(t_iter)+'\n')
 
+    def add_single_label(self, name, image, t_iter):
+       path_name = os.path.join(self.image_dir, name)
+       if not os.path.exists(path_name):
+           os.mkdir(path_name)
+       image = image.detach().cpu().numpy()
+       image = Image.fromarray(image.astype(np.uint8)).convert("P")
+       image.putpalette(self.palette)
+       image.save(os.path.join(self.plot_dir, "%s.png"%name))
+
     def add_label(self, name, image, t_iter):
        path_name = os.path.join(self.image_dir, name)
        if not os.path.exists(path_name):
