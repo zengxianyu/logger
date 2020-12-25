@@ -175,6 +175,28 @@ class Logger:
         with open("{}/validation.html".format(base_dir), "w") as f:
             f.writelines(output)
 
+    def write_console(self, epoch, i, t):
+        message = '(epoch: %d, iters: %d, time: %.3f) ' % (epoch, i, t)
+        for k,v in self.plot_vals.items():
+            #print(v)
+            #if v != 0:
+            #v = v.mean().float()
+            v = v[-1]
+            message += '%s: %.4f ' % (k, v)
+
+        print(message)
+        prefix = self.log_dir
+        with open("{}/logs.txt".format(prefix), "a") as log_file:
+            log_file.write('%s\n' % message)
+
+    def write_scalar(self, name, value, t_iter):
+        prefix = self.log_dir
+        with open("{}/{}.txt".format(prefix, name), "a") as log_file:
+            message = '%s %d: %.4f' % (name, t_iter, value)
+            print(message)
+            log_file.write(message+"\n")
+
+
     def write_html(self):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         file_loader = FileSystemLoader(os.path.join(dir_path, "templates"))
