@@ -69,7 +69,7 @@ class Logger:
             batch_land2d[:, :, 0] += offset[..., None]
             batch_land2d = batch_land2d.reshape(-1, 2)
 
-            ax.scatter(batch_land2d[:, 0], batch_land2d[:, 1], s=2, label=label)
+            ax.scatter(batch_land2d[:, 0], batch_land2d[:, 1], s=0.5, label=label)
         ax.axis("off")
         # Put a legend below current axis
         ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
